@@ -1,0 +1,19 @@
+services:
+  api:
+    build: ./api
+    ports:
+      - 8000:80
+    restart: always
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 123456
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    ports:
+      - 8888:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: lwieckowski@hotmail.com
+      PGADMIN_DEFAULT_PASSWORD: 123456
