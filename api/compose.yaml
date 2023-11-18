@@ -1,6 +1,6 @@
 services:
   api:
-    build: ./api
+    build: .
     ports:
       - 8000:80
     restart: always
