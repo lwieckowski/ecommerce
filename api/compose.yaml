@@ -9,6 +9,8 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: 123456
+    volumes:
+      - ecommerce:/var/lib/postgresql/data
   pgadmin:
     image: dpage/pgadmin4:latest
     restart: always
@@ -17,3 +19,5 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: lwieckowski@hotmail.com
       PGADMIN_DEFAULT_PASSWORD: 123456
+volumes:
+  ecommerce:
