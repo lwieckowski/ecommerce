@@ -8,31 +8,35 @@ create table ecommerce.users (
     email varchar(255) not null unique,
     first_name varchar(255) not null,
     last_name varchar(255) not null,
-    password_hash varchar(255) not null
+    password varchar(255) not null
 );
 
 create table ecommerce.products (
     id integer generated always as identity primary key,
     name varchar(255) not null,
-    description text not null,
     price money not null
 );
 
 create table ecommerce.carts (
     id integer generated always as identity primary key,
-    username varchar(16) references ecommerce.users
+    username varchar(16) references ecommerce.users,
+    created_on timestamp not null,
+    ordered boolean not null
 );
 
-create table ecommerce.cart_products (
-    cart_id integer references ecommerce.carts primary key,
-    product_id integer references ecommerce.products
+create table ecommerce.cart_items (
+    cart_id integer references ecommerce.carts,
+    product_id integer references ecommerce.products,
+    quantity integer not null,
+    subtotal money not null,
+    primary key (cart_id, product_id)
 );
 
 create type order_status as enum ('placed', 'in progress', 'shipped');
 
 create table ecommerce.orders (
     id integer generated always as identity primary key,
-    cart_id integer references ecommerce.carts,
+    cart_id integer references ecommerce.carts unique,
     username varchar(16) references ecommerce.users,
     placed_on timestamp not null,
     status order_status not null,
