@@ -3,3 +3,4 @@
 %uri=https://github.com/lwieckowski/ecommerce
 
 create_schema 2023-11-18T10:50:46Z L. Wieckowski <lwieckowski@hotmail.com> # Create schema for ecommerce app
+create_tables [create_schema] 2023-11-18T14:42:48Z L. Wieckowski <lwieckowski@hotmail.com> # Create tables

@@ -1,7 +1,7 @@
--- Verify ecommerce:create_schema on pg
+-- verify ecommerce:create_schema on pg
 
-BEGIN;
+begin;
 
-SELECT pg_catalog.has_schema_privilege('ecommerce', 'usage');
+select pg_catalog.has_schema_privilege('ecommerce', 'usage');
 
-ROLLBACK;
+rollback;

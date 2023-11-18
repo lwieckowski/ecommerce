@@ -1,7 +1,7 @@
--- Deploy ecommerce:create_schema to pg
+-- deploy ecommerce:create_schema to pg
 
-BEGIN;
+begin;
 
-CREATE SCHEMA ecommerce;
+create schema ecommerce;
 
-COMMIT;
+commit;

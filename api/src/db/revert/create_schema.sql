@@ -1,7 +1,7 @@
--- Revert ecommerce:create_schema from pg
+-- revert ecommerce:create_schema from pg
 
-BEGIN;
+begin;
 
-DROP SCHEMA ecommerce;
+drop schema ecommerce;
 
-COMMIT;
+commit;
