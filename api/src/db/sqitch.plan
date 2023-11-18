@@ -1,0 +1,5 @@
+%syntax-version=1.0.0
+%project=ecommerce
+%uri=https://github.com/lwieckowski/ecommerce
+
+create_schema 2023-11-18T10:50:46Z L. Wieckowski <lwieckowski@hotmail.com> # Create schema for ecommerce app

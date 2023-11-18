@@ -7,8 +7,10 @@ services:
   postgres:
     image: postgres:latest
     restart: always
+    ports:
+      - 5432:5432
     environment:
-      POSTGRES_PASSWORD: 123456
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - ecommerce:/var/lib/postgresql/data
   pgadmin:
@@ -18,6 +20,6 @@ services:
       - 8888:80
     environment:
       PGADMIN_DEFAULT_EMAIL: lwieckowski@hotmail.com
-      PGADMIN_DEFAULT_PASSWORD: 123456
+      PGADMIN_DEFAULT_PASSWORD: ${POSTGRES_PASSWORD}
 volumes:
   ecommerce:
