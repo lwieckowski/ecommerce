@@ -4,13 +4,15 @@ services:
     ports:
       - 8000:80
     restart: always
+    environment:
+      POSTGRES_PASSWORD: 123456
   db:
     image: postgres:latest
     restart: always
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PASSWORD: 123456
     volumes:
       - ecommerce:/var/lib/postgresql/data
   adminer:
