@@ -11,11 +11,16 @@ in `~/.sqitch/sqitch.conf`:
 [user]
     name = <username>
     email = <email>
+[deploy]
+	verify = true
+[rebase]
+	verify = true
 ```
 
 ## Commands
 See sqitch help, but here are some most important ones:
 ```
+sqitch add <change_name> --requires <dependency_name> -n 'Change message'
 sqitch deploy
 sqitch verify
 sqitch revert
