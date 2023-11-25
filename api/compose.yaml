@@ -6,6 +6,8 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: 123456
+    volumes:
+      - .:/api # This enables hot reloading for dev purposes
   db:
     image: postgres:latest
     restart: always
