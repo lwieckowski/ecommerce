@@ -1,13 +1,14 @@
 services:
   api:
     build: .
+    command: uvicorn src.api:app --host 0.0.0.0 --port 80 --reload
     ports:
       - 8000:80
     restart: always
     environment:
       POSTGRES_PASSWORD: 123456
     volumes:
-      - .:/api # This enables hot reloading for dev purposes
+      - ./src:/api/src # This enables hot reloading for dev purposes
   db:
     image: postgres:latest
     restart: always
