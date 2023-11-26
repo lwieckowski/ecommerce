@@ -1,9 +1,10 @@
 from contextlib import asynccontextmanager
+import os
 import databases
 from fastapi import FastAPI
 
-
-db = databases.Database("postgresql://postgres:123456@db/postgres")
+url = os.getenv("POSTGRES_URL", "")
+db = databases.Database(url)
 
 
 @asynccontextmanager
