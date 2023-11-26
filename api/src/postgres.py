@@ -1,4 +1,5 @@
 import os
+
 from psycopg_pool import ConnectionPool
 
 uri = os.getenv("POSTGRES_URL", "")

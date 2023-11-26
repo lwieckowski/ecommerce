@@ -1,6 +1,6 @@
-import postgres as db
 from fastapi import FastAPI
 
+import postgres as db
 
 app = FastAPI()
 
