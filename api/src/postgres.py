@@ -1,18 +1,12 @@
-from contextlib import asynccontextmanager
 import os
-import databases
-from fastapi import FastAPI
+from psycopg_pool import ConnectionPool
 
-url = os.getenv("POSTGRES_URL", "")
-db = databases.Database(url)
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    await db.connect()
-    yield
-    await db.disconnect()
+uri = os.getenv("POSTGRES_URL", "")
+pool = ConnectionPool(uri, open=True)
 
 
-async def get_users():
-    return await db.fetch_all("SELECT * from ecommerce.users")
+def get_users():
+    query = "SELECT * from ecommerce.users"
+    with pool.connection() as conn:
+        users = conn.execute(query).fetchall()
+    return users

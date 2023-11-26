@@ -1,9 +1,8 @@
+import postgres as db
 from fastapi import FastAPI
 
-import postgres as database
 
-
-app = FastAPI(lifespan=database.lifespan)
+app = FastAPI()
 
 
 @app.get("/")
@@ -13,5 +12,5 @@ async def hello_world():
 
 @app.get("/users")
 async def users():
-    users = await database.get_users()
+    users = db.get_users()
     return users

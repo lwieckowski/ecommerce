@@ -1,6 +1,6 @@
 fastapi
 uvicorn[standard]
-databases[asyncpg]
+psycopg[binary, pool]
 pytest
 pytest-xdist
 httpx
