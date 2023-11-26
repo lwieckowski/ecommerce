@@ -1,22 +1,21 @@
 services:
   api:
     build: .
-    command: uvicorn src.api:app --host 0.0.0.0 --port 80 --reload
+    command: uvicorn src.api:app --host 0.0.0.0 --port 80 --reload # dev
     ports:
       - 8000:80
     restart: always
     environment:
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_URL: postgresql://postgres:123456@db/postgres
+      POSTGRES_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db/postgres
     volumes:
-      - ./src:/api/src # This enables hot reloading for dev purposes
+      - ./src:/api/src # dev
   db:
     image: postgres:latest
     restart: always
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: 123456
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - ecommerce:/var/lib/postgresql/data
   adminer:
