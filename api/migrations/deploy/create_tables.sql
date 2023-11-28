@@ -6,8 +6,6 @@ begin;
 create table ecommerce.users (
     username varchar(16) primary key,
     email varchar(255) not null unique,
-    first_name varchar(255) not null,
-    last_name varchar(255) not null,
     password varchar(255) not null
 );
 
