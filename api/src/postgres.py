@@ -1,8 +1,9 @@
 import os
 from functools import cache
 
-import psycopg
-from psycopg.rows import class_row
+from psycopg import Connection
+from psycopg.rows import class_row, TupleRow
+from psycopg.errors import UniqueViolation
 from psycopg_pool import ConnectionPool
 
 from definitions import User
@@ -14,23 +15,22 @@ def get_pool():
     return ConnectionPool(uri, open=True)
 
 
-def get_users() -> list[User]:
-    query = "select * from ecommerce.users"
-    pool = get_pool()
-    with pool.connection() as conn:
-        cursor = conn.cursor(row_factory=class_row(User))
-        users = cursor.execute(query).fetchall()
+async def get_db():
+    with get_pool().connection() as conn:
+        yield conn
+
+
+def get_users(db: Connection[TupleRow]) -> list[User]:
+    sql = "select * from ecommerce.users"
+    cursor = db.cursor(row_factory=class_row(User))
+    users = cursor.execute(sql).fetchall()
     return users
 
 
-def add_user(user: User) -> User:
-    query = (
-        "insert into ecommerce.users (username, email, password) values (%s, %s, %s)"
-    )
-    pool = get_pool()
-    with pool.connection() as conn:
-        try:
-            conn.execute(query, (user.username, user.email, user.password))
-        except psycopg.errors.UniqueViolation:
-            return user
+def add_user(db: Connection[TupleRow], user: User) -> User:
+    sql = "insert into ecommerce.users (username, email, password) values (%s, %s, %s)"
+    try:
+        db.execute(sql, (user.username, user.email, user.password))
+    except UniqueViolation:
+        return user
     return user
