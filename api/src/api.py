@@ -6,11 +6,6 @@ from definitions import User
 app = FastAPI()
 
 
-@app.get("/")
-async def hello_world():
-    return {"message": "Hello world!"}
-
-
 @app.get("/users")
 async def get_users() -> list[User]:
     users = db.get_users()
