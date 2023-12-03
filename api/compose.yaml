@@ -11,9 +11,9 @@ services:
     volumes:
       - .:/api # dev
     depends_on:
-      - migrations
-  migrations:
-    build: ./migrations
+      - schema
+  schema:
+    build: ./schema
     depends_on:
       - postgres
     command: sqitch deploy db:pg://${DB_USER}:${DB_PASSWD}@postgres/${DB_NAME}

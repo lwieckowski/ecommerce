@@ -2,24 +2,19 @@ import pytest
 from starlette.testclient import TestClient
 
 import api
-from postgres import get_db, get_pool
-
-
-@pytest.fixture(scope="session")
-def db_pool():
-    return get_pool()
+import db
 
 
 @pytest.fixture(scope="function")
-def db_session(db_pool):
-    with db_pool.connection() as conn:
-        yield conn
-        conn.rollback()
+def db_session():
+    with db.get_pool().connection() as session:
+        yield session
+        session.rollback()
 
 
 @pytest.fixture(scope="function")
-def client(db_session):
-    api.app.dependency_overrides[get_db] = lambda: db_session
+def test_client(db_session):
+    api.app.dependency_overrides[db.get_session] = lambda: db_session
     with TestClient(api.app) as test_client:
         yield test_client
 
