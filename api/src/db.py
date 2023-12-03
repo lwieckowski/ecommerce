@@ -30,10 +30,10 @@ def get_users(db: Session) -> list[User]:
     return users
 
 
-def add_user(db: Session, user: User) -> User:
+def add_user(db: Session, user: User) -> User | None:
     sql = "insert into ecommerce.users (username, email, password) values (%s, %s, %s)"
     try:
         db.execute(sql, (user.username, user.email, user.password))
     except UniqueViolation:
-        return user
+        return None
     return user

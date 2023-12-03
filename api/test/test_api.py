@@ -30,11 +30,21 @@ def test_create_user_invalid_body(test_client):
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
 
-def test_create_user_already_exists(test_client):
-    """Test case with subsequent requests trying to create user that exists."""
+def test_create_user_username_already_exists(test_client):
+    """Test case with subsequent requests trying to add user with the same username."""
     user = User(username="mike", email="mike.hike@gmail.com", password="123")
+    response = test_client.post("/users", json=asdict(user))
     with test_client:
-        response = test_client.post("/users", json=asdict(user))
-        assert response.status_code == status.HTTP_201_CREATED
-        response = test_client.post("/users", json=asdict(user))
-        assert response.status_code == status.HTTP_201_CREATED
+        new_user = User(username="mike", email="mike2.hike@gmail.com", password="123")
+        response = test_client.post("/users", json=asdict(new_user))
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+def test_create_user_email_already_exists(test_client):
+    """Test case with subsequent requests trying to add user with the same email."""
+    user = User(username="mike", email="mike.hike@gmail.com", password="123")
+    response = test_client.post("/users", json=asdict(user))
+    with test_client:
+        new_user = User(username="mike2", email="mike.hike@gmail.com", password="123")
+        response = test_client.post("/users", json=asdict(new_user))
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
