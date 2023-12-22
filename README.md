@@ -1,0 +1,1 @@
+A small side project to explore docker compose and SQL schema migrations with sqitch.
